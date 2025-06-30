@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import sqlite3
@@ -323,13 +322,45 @@ ORDER BY RestaurantClients.[Hour] ASC;
 
 # --- DASHBOARD ---
 elif tab == "📊 Dashboard":
-    st.title("📊 Interactive Dashboard")
+    st.title("📊 Interactive Dashboards")
 
-    # Instructional message above the dashboard
-    st.markdown("### 🎮 Please click a genre to interact with the dashboard below")
+    dashboards = {
+        "🎮 Game Sales Dashboard": {
+            "filename": "tableau_dashboard.html",
+            "instructions": "### 🎮 Please click a genre to interact with the dashboard below",
+            "height": 900
+        },
+        "📈 Advanced Retail Dashboard": {
+            "filename": "maven_roasters_dashboard_rebuilt.html",
+            "instructions": "### 📈 Analyze monthly sales trends and category performance\nPlease click the '?' icon for info on navigating the dashboard.",
+            "height": 1400
+        },
+        "🧠 Advanced Analytics Dashboard": {
+            "filename": "maven_roasters_detail_rebuilt.html",
+            "instructions": "### 🧠 Explore customer and warehouse analytics\nInteract with Picker Stats Table by selecting a Picker Name and watch the data come to life!",
+            "height": 2500
+        }
+    }
+
+    # Dropdown to select one dashboard
+    dashboard_choice = st.selectbox("Choose a dashboard to explore:", list(dashboards.keys()))
+    selected = dashboards[dashboard_choice]
+
+    # Show instructions and embedded HTML
+    st.markdown(selected["instructions"])
+    st.markdown("---")
+    try:
+        with open(os.path.join("assets", selected["filename"]), "r", encoding="utf-8") as f:
+            html = f.read()
+        st.components.v1.html(html, height=selected["height"], scrolling=False)
+    except FileNotFoundError:
+        st.error(f"Dashboard file '{selected['filename']}' not found.")
     st.markdown("---")
 
-    with open("assets/tableau_dashboard.html", "r", encoding="utf-8") as f:
-        html = f.read()
-
-    st.components.v1.html(html, height=900, scrolling=False)
+    # Footer (only once)
+    st.markdown("Some dashboards were recreated as part of a hands-on LinkedIn Learning course by Maven Analytics.")
+    st.markdown("The goal was to fully rebuild the dashboard from scratch to practice and reinforce key Tableau skills,")
+    st.markdown("including advanced interactivity, calculations, formatting, and design consistency.")
+    st.markdown("While the structure closely follows the original instructional version, all work shown here was implemented")
+    st.markdown("independently as part of the learning process. No original course files were reused. This project helped me")
+    st.markdown("strengthen my end-to-end Tableau workflow, from data preparation to final visualization.")

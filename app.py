@@ -327,17 +327,17 @@ elif tab == "📊 Dashboard":
     dashboards = {
         "🎮 Game Sales Dashboard": {
             "filename": "tableau_dashboard.html",
-            "instructions": "### 🎮 Please click a genre to interact with the dashboard below",
+            "instructions": "### 🎮 Please select a publisher or genre to interact with the dashboard below!",
             "height": 900
         },
         "📈 Advanced Retail Dashboard": {
             "filename": "maven_roasters_dashboard_rebuilt.html",
-            "instructions": "### 📈 Analyze monthly sales trends and category performance\nPlease click the '?' icon for info on navigating the dashboard.",
+            "instructions": "### 📈 Analyze monthly sales trends and category performance\nPlease click the '?' icon for info on navigating the dashboard!",
             "height": 1400
         },
         "🧠 Advanced Analytics Dashboard": {
             "filename": "maven_roasters_detail_rebuilt.html",
-            "instructions": "### 🧠 Explore customer and warehouse analytics\nInteract with Picker Stats Table by selecting a Picker Name and watch the data come to life!",
+            "instructions": "### 🧠 Explore customer and warehouse analytics\nInteract with Dropdowns or with the Picker Stats Ranking Table by selecting a Picker Name and watch the data come to life!",
             "height": 2500
         }
     }

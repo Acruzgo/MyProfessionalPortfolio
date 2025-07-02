@@ -2,14 +2,17 @@ import streamlit as st
 import pandas as pd
 import sqlite3
 import os
-
+import base64
 
 # Set page config
 st.set_page_config(page_title="Argenis Portfolio", layout="wide")
 
 # Sidebar
 st.sidebar.title("Navigation")
-tab = st.sidebar.radio("Go to", ["👨‍💼 Bio", "🛠️ SQL Code", "📊 Dashboard"])
+st.sidebar.markdown("---")
+st.sidebar.markdown("📧 [Email Me](mailto:acruzgo@outlook.com)")
+tab = st.sidebar.radio("Go to", ["👨‍💼 Bio", "🛠️ SQL Code", "📊 Dashboard", "📄 Resume"])
+
 
 # --- BIO ---
 if tab == "👨‍💼 Bio":
@@ -30,6 +33,7 @@ if tab == "👨‍💼 Bio":
     - **Tableau**, **Power BI**
     - **Excel (Advanced), VBA (Intermediate)**
     """)
+    st.markdown("**GitHub Portfolio:** [github.com/Acruzgo/MyProfessionalPortfolio](https://github.com/Acruzgo/MyProfessionalPortfolio)")
 
 # --- SQL CODE ---
 elif tab == "🛠️ SQL Code":
@@ -389,3 +393,29 @@ elif tab == "📊 Dashboard":
     The *Game Sales Dashboard* was developed during my MBA Tableau course and focuses on core visualization techniques and interactivity.  
     The *Retail* and *Analytics* dashboards were fully built from scratch as part of the *Advanced Tableau Desktop* course by Maven Analytics on LinkedIn Learning. While the business scenarios were part of the course, every chart, filter, action, and layout was recreated independently to demonstrate mastery of Tableau's advanced design, logic, and storytelling capabilities.
     """)
+
+# --- RESUME ---
+elif tab == "📄 Resume":
+    st.title("📄 My Resume")
+
+    resume_path = "assets/Argenis_Cruz-Gonzalez_MBA_Resume.pdf"
+
+    try:
+        with open(resume_path, "rb") as f:
+            base64_pdf = base64.b64encode(f.read()).decode('utf-8')
+            PDFbyte = f.read()  # also store for download button
+
+        # Display resume inside the app
+        pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="1000" type="application/pdf"></iframe>'
+        st.markdown(pdf_display, unsafe_allow_html=True)
+
+        # ✅ Optional download button (immediately after iframe)
+        st.download_button(
+            label="📥 Download PDF Resume",
+            data=open(resume_path, "rb").read(),
+            file_name="Argenis_Cruz-Gonzalez_Resume.pdf",
+            mime="application/pdf"
+        )
+
+    except FileNotFoundError:
+        st.error(f"Resume file '{resume_path}' not found. Please make sure it's in the assets folder.")

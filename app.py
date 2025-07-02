@@ -405,7 +405,7 @@ elif tab == "📊 Dashboard":
 elif tab == "📄 Resume":
     st.title("📄 My Resume")
 
-    st.image("assets/resume_page_1.png", use_column_width=True)
-    st.image("assets/resume_page_2.png", use_column_width=True)
+    st.image("images/resume_page_1.png", use_container_width=True)
+    st.image("images/resume_page_2.png", use_container_width=True)
 
     st.markdown("📥 [Download PDF Resume](assets/Argenis_Cruz-Gonzalez_MBA_Resume.pdf)")

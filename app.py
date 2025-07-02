@@ -405,24 +405,7 @@ elif tab == "📊 Dashboard":
 elif tab == "📄 Resume":
     st.title("📄 My Resume")
 
-    resume_path = "assets/Argenis_Cruz-Gonzalez_MBA_Resume.pdf"
+    st.image("assets/resume_page_1.png", use_column_width=True)
+    st.image("assets/resume_page_2.png", use_column_width=True)
 
-    try:
-        with open(resume_path, "rb") as f:
-            base64_pdf = base64.b64encode(f.read()).decode('utf-8')
-            PDFbyte = f.read()  # also store for download button
-
-        # Display resume inside the app
-        pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="1000" type="application/pdf"></iframe>'
-        st.markdown(pdf_display, unsafe_allow_html=True)
-        st.markdown("❗ If you can't view the resume above, please use the download button below or switch to Chrome.")
-        # ✅ Optional download button (immediately after iframe)
-        st.download_button(
-            label="📥 Download PDF Resume",
-            data=open(resume_path, "rb").read(),
-            file_name="Argenis_Cruz-Gonzalez_Resume.pdf",
-            mime="application/pdf"
-        )
-
-    except FileNotFoundError:
-        st.error(f"Resume file '{resume_path}' not found. Please make sure it's in the assets folder.")
+    st.markdown("📥 [Download PDF Resume](assets/Argenis_Cruz-Gonzalez_MBA_Resume.pdf)")

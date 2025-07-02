@@ -17,8 +17,9 @@ if tab == "👨‍💼 Bio":
     st.image("images/me.jpg", caption="Argenis Cruz-Gonzalez", width=150)
     st.markdown("""
     ### About Me
-    I’m a data analyst with 6+ years of experience turning messy datasets into actionable insights using SQL, Tableau, and Excel. 
-    I specialize in creating clean, intuitive dashboards that drive smarter decisions and tell compelling stories with data.
+    Data-driven MBA candidate (GPA 3.97) with 6+ years of experience in healthcare analytics, financial modeling, 
+    and cross-functional team leadership. Seeking business/data analyst roles to apply analytical acumen, 
+    technical skills, and strategic/actionable insight in high-impact environments.
 
     - 🎓 MBA Graduate from Tulane University
     - 💼 Past roles in data analytics
@@ -317,7 +318,21 @@ FROM
 GROUP BY RestaurantClients.[Hour]
 ORDER BY RestaurantClients.[Hour] ASC;
     """
+    # SQL Project Overview (Collapsible Section)
+    with st.expander("Project Overview - *click to expand*"):
+        st.markdown("""
+    **SQL Business Analytics Project – Tulane University (MBA Program)**  
+    This project was developed as part of an MBA-level SQL course, simulating a real-world business scenario involving client behavior, subscription tiers, and employee performance. Using Microsoft SQL Server, I created normalized schemas, imported and cleaned datasets, and built logic-driven queries to extract actionable insights.
 
+    **Key Highlights:**
+    - Designed and populated relational schemas using `CREATE TABLE`, `BULK INSERT`, and foreign keys
+    - Wrote complex queries to answer business questions across client segmentation, sales attribution, and operational performance
+    - Built dynamic views and stored procedures for employee-specific reporting
+    - Joined datasets across multiple schemas (App, HR, Restaurant) and used `GROUP BY`, `CASE`, `UNION`, `HAVING`, and aggregation logic
+    - Delivered 10+ insights on clients, cities, coffee sales, device usage, and subscription revenue
+
+    **Tools Used:** SQL Server Management Studio (SSMS), Snowflake-compatible syntax
+        """)
     st.code(sql_code, language='sql')
 
 # --- DASHBOARD ---
@@ -325,20 +340,29 @@ elif tab == "📊 Dashboard":
     st.title("📊 Interactive Dashboards")
 
     dashboards = {
-        "🎮 Game Sales Dashboard": {
-            "filename": "tableau_dashboard.html",
-            "instructions": "### 🎮 Please select a publisher or genre to interact with the dashboard below!",
-            "height": 900
-        },
         "📈 Advanced Retail Dashboard": {
             "filename": "maven_roasters_dashboard_rebuilt.html",
-            "instructions": "### 📈 Analyze monthly sales trends and category performance\nPlease click the '?' icon for info on navigating the dashboard!",
+            "instructions": """\
+    ### 📈 Retail Sales Performance Dashboard  
+    Built entirely from scratch as part of the *Advanced Tableau Desktop* course by Maven Analytics on LinkedIn Learning. This dashboard visualizes sales trends, product category breakdowns, and regional performance for a fictional coffee brand. Developed using advanced layout design, KPI cards, dynamic sheet swapping, filter menus, and custom visuals — all implemented independently.
+    """,
             "height": 1400
         },
         "🧠 Advanced Analytics Dashboard": {
             "filename": "maven_roasters_detail_rebuilt.html",
-            "instructions": "### 🧠 Explore customer and warehouse analytics\nInteract with Dropdowns or with the Picker Stats Ranking Table by selecting a Picker Name and watch the data come to life!",
+            "instructions": """\
+    ### 🧠 Customer & Warehouse Operations Dashboard  
+    Also created independently during the *Advanced Tableau Desktop* course by Maven Analytics. This dashboard simulates operational business intelligence through customer cohorts, picker performance, and fulfillment KPIs. Built using parameter actions, multi-measure displays, set-driven interactivity, and advanced calculated fields — all constructed from a blank Tableau canvas..
+    """,
             "height": 2500
+        },
+        "🎮 Game Sales Dashboard": {
+            "filename": "tableau_dashboard.html",
+            "instructions": """\
+    ### 🎮 Global Game Sales Dashboard  
+    Created during my MBA Tableau course, this dashboard analyzes video game sales across platforms, genres, and publishers. Focused on visual storytelling and foundational interactivity, it uses filters, treemaps, line charts, and category highlights to draw user-driven insights.
+    """,
+            "height": 900
         }
     }
 
@@ -358,9 +382,10 @@ elif tab == "📊 Dashboard":
     st.markdown("---")
 
     # Footer (only once)
-    st.markdown("Some dashboards were recreated as part of a hands-on LinkedIn Learning course by Maven Analytics.")
-    st.markdown("The goal was to fully rebuild the dashboard from scratch to practice and reinforce key Tableau skills,")
-    st.markdown("including advanced interactivity, calculations, formatting, and design consistency.")
-    st.markdown("While the structure closely follows the original instructional version, all work shown here was implemented")
-    st.markdown("independently as part of the learning process. No original course files were reused. This project helped me")
-    st.markdown("strengthen my end-to-end Tableau workflow, from data preparation to final visualization.")
+    st.markdown("""
+    ---
+
+    📌 **Dashboard Project Notes:**  
+    The *Game Sales Dashboard* was developed during my MBA Tableau course and focuses on core visualization techniques and interactivity.  
+    The *Retail* and *Analytics* dashboards were fully built from scratch as part of the *Advanced Tableau Desktop* course by Maven Analytics on LinkedIn Learning. While the business scenarios were part of the course, every chart, filter, action, and layout was recreated independently to demonstrate mastery of Tableau's advanced design, logic, and storytelling capabilities.
+    """)

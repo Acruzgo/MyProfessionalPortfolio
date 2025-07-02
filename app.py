@@ -408,7 +408,7 @@ elif tab == "📄 Resume":
         # Display resume inside the app
         pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="1000" type="application/pdf"></iframe>'
         st.markdown(pdf_display, unsafe_allow_html=True)
-
+        st.markdown("❗ If you can't view the resume above, please use the download button below or switch to Chrome.")
         # ✅ Optional download button (immediately after iframe)
         st.download_button(
             label="📥 Download PDF Resume",

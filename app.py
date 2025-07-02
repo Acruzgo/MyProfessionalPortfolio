@@ -17,22 +17,29 @@ tab = st.sidebar.radio("Go to", ["👨‍💼 Bio", "🛠️ SQL Code", "📊 Da
 # --- BIO ---
 if tab == "👨‍💼 Bio":
     st.title("Data Analyst Professional Portfolio")
-    st.image("images/me.jpg", caption="Argenis Cruz-Gonzalez", width=150)
-    st.markdown("""
-    ### About Me
-    Data-driven MBA candidate (GPA 3.97) with 6+ years of experience in healthcare analytics, financial modeling, 
-    and cross-functional team leadership. Seeking business/data analyst roles to apply analytical acumen, 
-    technical skills, and strategic/actionable insight in high-impact environments.
 
-    - 🎓 MBA Graduate from Tulane University
-    - 💼 Past roles in data analytics
-    - 🧠 Passionate about automation, data-based insights, and data storytelling
+    col1, col2 = st.columns([1, 3])  # Adjust width ratio if needed
 
-    ### Skills
-    - **SQL** (SSMS, Snowflake)
-    - **Tableau**, **Power BI**
-    - **Excel (Advanced), VBA (Intermediate)**
-    """)
+    with col1:
+        st.image("images/me.jpg", caption="Argenis Cruz-Gonzalez", width=500)
+
+    with col2:
+        st.markdown("""
+        ### About Me  
+        Proven track record in data analytics and business strategy, with 6+ years driving insights in healthcare and operations. 
+        Passionate about automation, visualization, and cross-functional collaboration.
+
+        - 🎓 MBA Graduate from Tulane University  
+        - 💼 Past roles in data analytics  
+        - 🧠 Passionate about automation, data-based insights, and data storytelling  
+
+        ### Skills
+        - **SQL & Databases:** SQL (Advanced), SSMS, Snowflake  
+        - **Business Intelligence:** Tableau (Advanced), Power BI  
+        - **Excel & Automation:** Excel (Advanced), VBA (Intermediate)  
+        - **Programming:** Python (In Progress), GitHub  
+        - **Languages:** English, Spanish  
+        """)
     st.markdown("**GitHub Portfolio:** [github.com/Acruzgo/MyProfessionalPortfolio](https://github.com/Acruzgo/MyProfessionalPortfolio)")
 
 # --- SQL CODE ---

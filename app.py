@@ -21,7 +21,7 @@ if tab == "👨‍💼 Bio":
     col1, col2 = st.columns([1, 3])  # Adjust width ratio if needed
 
     with col1:
-        st.image("images/me.jpg", caption="Argenis Cruz-Gonzalez", width=500)
+        st.image("images/me.jpg", caption="Argenis Cruz-Gonzalez", use_container_width=True)
 
     with col2:
         st.markdown("""

@@ -408,7 +408,7 @@ elif tab == "📄 Resume":
     st.image("images/resume_page1.png", width=850)
     st.image("images/resume_page2.png", width=850)
 
-    st.markdown("📥 Prefer a PDF copy? Download it below:")
+    st.markdown("📥 Prefer a PDF copy?")
     st.download_button(
         label="Download My Resume (PDF)",
         data=open("assets/Argenis_Cruz-Gonzalez_MBA_Resume.pdf", "rb").read(),

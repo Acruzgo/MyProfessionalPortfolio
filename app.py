@@ -405,13 +405,13 @@ elif tab == "📊 Dashboard":
 elif tab == "📄 Resume":
     st.title("📄 My Resume")
 
-    st.image("images/resume_page1.png", width=850)
-    st.image("images/resume_page2.png", width=850)
+    st.image("images/resume_page_1.png", width=850)
+    st.image("images/resume_page_2.png", width=850)
 
     st.markdown("📥 Prefer a PDF copy?")
     st.download_button(
         label="Download My Resume (PDF)",
-        data=open("assets/Argenis_Cruz-Gonzalez_MBA_Resume_.pdf", "rb").read(),
-        file_name="Argenis_Cruz-Gonzalez_MBA_Resume_.pdf",
+        data=open("assets/Argenis_Cruz-Gonzalez_MBA_Resume.pdf", "rb").read(),
+        file_name="Argenis_Cruz-Gonzalez_MBA_Resume.pdf",
         mime="application/pdf"
     )

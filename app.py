@@ -411,7 +411,7 @@ elif tab == "📄 Resume":
     st.markdown("📥 Prefer a PDF copy?")
     st.download_button(
         label="Download My Resume (PDF)",
-        data=open("assets/Argenis_Cruz-Gonzalez_MBA_Resume.pdf", "rb").read(),
-        file_name="Argenis_Cruz-Gonzalez_MBA_Resume.pdf",
+        data=open("assets/Argenis_Cruz-Gonzalez_MBA_Resume_.pdf", "rb").read(),
+        file_name="Argenis_Cruz-Gonzalez_MBA_Resume_.pdf",
         mime="application/pdf"
     )

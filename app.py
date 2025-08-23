@@ -405,8 +405,7 @@ elif tab == "📊 Dashboard":
 elif tab == "📄 Resume":
     st.title("📄 My Resume")
 
-    st.image("images/Resume_Top.png", width=850)
-    st.image("images/Resume_Bottom.png", width=850)
+    st.image("images/Resume_Long_Fixed.png", width=850)
 
     st.markdown("📥 Prefer a PDF copy?")
     st.download_button(

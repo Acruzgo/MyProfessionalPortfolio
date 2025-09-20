@@ -16,7 +16,7 @@ tab = st.sidebar.radio("Go to", ["👨‍💼 Bio", "🛠️ SQL Code", "📊 Da
 
 # --- BIO ---
 if tab == "👨‍💼 Bio":
-    st.title("Data Analyst Professional Portfolio")
+    st.title("Professional Portfolio")
 
     col1, col2 = st.columns([1, 3])  # Adjust width ratio if needed
 
@@ -26,21 +26,26 @@ if tab == "👨‍💼 Bio":
     with col2:
         st.markdown("""
         ### About Me  
-        Proven track record in data analytics and business strategy, with 6+ years driving insights in healthcare and operations. 
-        Passionate about automation, visualization, and cross-functional collaboration.
+        **Data & Strategy Professional • MBA in Business & Analytics • $5M+ in Annual Impact • Transitioning into Product Management**  
 
-        - 🎓 MBA Graduate from Tulane University  
-        - 💼 Past roles in data analytics  
-        - 🧠 Passionate about automation, data-based insights, and data storytelling  
+        MBA graduate in Business & Data Analytics (Tulane, GPA 3.97) with 6+ years of experience delivering multi-million-dollar impact through data-driven solutions. Skilled at transforming complex data into actionable insights, I excel at bridging business needs with technical execution.  
 
-        ### Skills
-        - **SQL & Databases:** SQL (Advanced), SSMS, Snowflake  
+        Currently transitioning into **product management and technology-driven industries**, I bring expertise in SQL, Tableau, and Agile collaboration—paired with a passion for innovation, data storytelling, and creating user-focused solutions.  
+
+        - 🏅 MBA, Tulane University – Business & Data Analytics (GPA 3.97)  
+        - 📊 6+ years driving analytics & strategy at Optum (UnitedHealth Group)  
+        - 🚀 Proven record in automation, BI dashboards, and cross-functional leadership  
+
+        ### Skills  
+        - **SQL & Databases:** SQL (Advanced), Snowflake, SSMS  
         - **Business Intelligence:** Tableau (Advanced), Power BI  
-        - **Excel & Automation:** Excel (Advanced), VBA (Intermediate)  
-        - **Programming:** Python (In Progress), GitHub  
+        - **Excel & Automation:** Excel (Advanced), VBA Automation  
+        - **Programming & Tools:** Python (In Progress), GitHub, Agile/Scrum  
         - **Languages:** English, Spanish  
+
+        ---
+        🔑 *Open to opportunities where I can leverage data, strategy, and product expertise to drive innovation in technology-driven industries — with applications ranging from SaaS and healthcare to gaming.* 
         """)
-    st.markdown("**GitHub Portfolio:** [github.com/Acruzgo/MyProfessionalPortfolio](https://github.com/Acruzgo/MyProfessionalPortfolio)")
 
 # --- SQL CODE ---
 elif tab == "🛠️ SQL Code":

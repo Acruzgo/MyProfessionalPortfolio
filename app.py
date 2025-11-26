@@ -373,7 +373,7 @@ ORDER BY RestaurantClients.[Hour] ASC;
     st.code(sql_code, language='sql')
 
 # --- DASHBOARD ---
-elif tab == "📊 Dashboard":
+elif tab == "📊 Dashboards":
     st.title("📊 Interactive Dashboards")
 
     dashboards = {
@@ -392,14 +392,6 @@ elif tab == "📊 Dashboard":
     Also created independently during the *Advanced Tableau Desktop* course by Maven Analytics. This dashboard simulates operational business intelligence through customer cohorts, picker performance, and fulfillment KPIs. Built using parameter actions, multi-measure displays, set-driven interactivity, and advanced calculated fields — all constructed from a blank Tableau canvas..
     """,
             "height": 2500
-        },
-        "🎮 Game Sales Dashboard": {
-            "filename": "tableau_dashboard.html",
-            "instructions": """\
-    ### 🎮 Global Game Sales Dashboard  
-    Created during my MBA Tableau course, this dashboard analyzes video game sales across platforms, genres, and publishers. Focused on visual storytelling and foundational interactivity, it uses filters, treemaps, line charts, and category highlights to draw user-driven insights.
-    """,
-            "height": 900
         }
     }
 

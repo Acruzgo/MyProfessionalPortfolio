@@ -11,7 +11,8 @@ st.set_page_config(page_title="Argenis Portfolio", layout="wide")
 st.sidebar.title("Navigation")
 st.sidebar.markdown("---")
 st.sidebar.markdown("📧 [Email Me](mailto:acruzgo@outlook.com)")
-tab = st.sidebar.radio("Go to", ["👨‍💼 Bio", "🛠️ SQL Code", "📊 Dashboard", "📄 Resume"])
+st.sidebar.markdown("🔗 [LinkedIn](https://www.linkedin.com/in/acruzgo/)")
+tab = st.sidebar.radio("Go to", ["👨‍💼 Bio", "📘 Capstone Project", "📊 Dashboards", "🛠️ SQL Code", "📄 Resume"])
 
 
 # --- BIO ---
@@ -46,6 +47,26 @@ if tab == "👨‍💼 Bio":
         ---
         🔑 *Open to opportunities where I can leverage data, strategy, and product expertise to drive innovation in technology-driven industries — with applications ranging from SaaS and healthcare to gaming.* 
         """)
+
+# --- CAPSTONE PROJECT ---
+elif tab == "📘 Capstone Project":
+    st.title("📘 Mobile Game Monetization Analysis – Full Capstone")
+
+    st.markdown("""
+    ### 🎮 Overview  
+    This capstone explores monetization patterns in a free-to-play mobile game dataset  
+    using R, ggplot2, dplyr, and statistical analysis techniques.
+
+    **Click the legend below to view the full interactive report.**
+    """)
+
+    try:
+        with open(os.path.join("assets", "F2P_Capstone.html"), "r", encoding="utf-8") as f:
+            capstone_html = f.read()
+        st.components.v1.html(capstone_html, height=1800, scrolling=True)
+
+    except FileNotFoundError:
+        st.error("Capstone file not found. Make sure F2P_Capstone.html is in the /assets folder.")
 
 # --- SQL CODE ---
 elif tab == "🛠️ SQL Code":

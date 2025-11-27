@@ -15,90 +15,94 @@ st.sidebar.markdown("🔗 [LinkedIn](https://www.linkedin.com/in/acruzgo/)")
 tab = st.sidebar.radio("Go to", ["👨‍💼 Bio", "📘 Capstone Project", "📊 Dashboards", "🛠️ SQL Code", "📄 Resume"])
 
 
-# --- BIO ---
 if tab == "👨‍💼 Bio":
-    st.title("Professional Portfolio")
 
-    # Layout: LEFT column (image), RIGHT column (about + cards)
-    left, right = st.columns([1, 2])
+    # NAME + TITLE
+    st.markdown("""
+        <div style='text-align:center; margin-top:1px;'>
+            <h2 style='margin-bottom:0;'>Argenis Cruz-Gonzalez</h2>
+            <h1 style='margin-top:1px;'>Professional Portfolio</h1>
+        </div>
+    """, unsafe_allow_html=True)
 
-    # LEFT SIDE IMAGE
-    with left:
-        st.image("images/me.jpg", caption="Argenis Cruz-Gonzalez", use_container_width=True)
+    # GHOST LAYOUT: 3 columns where center column matches Streamlit element width (865px)
+    left, center, right = st.columns([1, 2.5, 1])
 
-    # RIGHT SIDE (About Me + Skills/Tools cards)
-    with right:
+    with center:
 
-        # ABOUT ME at the top
-        st.markdown("""
-        ## About Me
-        I work across data, analytics, and workflow improvement — using SQL, BigQuery, dashboards,
-        and experimentation frameworks to help teams understand behavior, identify issues,
-        and make informed decisions.
+        # nested columns: IMAGE | ABOUT ME
+        img_col, about_col = st.columns([0.5, 1.25], vertical_alignment="center")
 
-        When I'm not analyzing data, you'll usually find me 🎮 gaming, 🚣‍♂️ kayaking, 🎨 exploring art,
-        or 🎧 listening to music — hobbies that keep me creative and grounded.
-        """)
+        # IMAGE (no caption so your name is not duplicated)
+        with img_col:
+            st.markdown("<div style='text-align:center;'>", unsafe_allow_html=True)
+            st.image("images/me.jpg", width=350)
+            st.markdown("</div>", unsafe_allow_html=True)
 
-        st.markdown("")  # spacing
+        # ABOUT ME (matched height)
+        with about_col:
+            st.markdown("""
+                <div style="
+                    background-color:#1e1e1e;
+                    padding:20px 28px;
+                    border-radius:12px;
+                    border:1px solid #333;
+                    min-height:350px;
+                    display:flex;
+                    flex-direction:column;
+                    justify-content:center;
+                ">
+                    <h2>About Me</h2>
+                    <p style="font-size:16px; line-height:1.6;">
+                        I work across data, analytics, and workflow improvement — using SQL, BigQuery,
+                        dashboards, and experimentation frameworks to help teams understand behavior,
+                        identify issues, and make informed decisions.
+                        <br><br>
+                        When I'm not analyzing data, you'll usually find me 🎮 gaming, 🚣‍♂️ kayaking,
+                        🎨 exploring art, or 🎧 listening to music — hobbies that keep me creative and grounded.
+                    </p>
+                </div>
+            """, unsafe_allow_html=True)
 
-        # NESTED ROW for cards (INSIDE right column)
-        skills_col, tools_col = st.columns(2)
+    st.markdown("<hr>", unsafe_allow_html=True)
 
-        # ---- CARD STYLE ----
-        card_style = """
-        <div style="
-            background-color:#1e1e1e;
-            padding:15px;
-            border-radius:10px;
-            border:1px solid #333;
-            margin-bottom:20px;
-        ">
-        """
 
-        # ---- SKILLS CARD ----
-        with skills_col:
-            st.markdown(
-f"""
-{card_style}
-<h4 style='margin-top:0;'>📊 Skills</h4>
-<ul style="padding-left:20px;">
-    <li>SQL</li>
-    <li>BigQuery</li>
-    <li>R Programming</li>
-    <li>Cohort Analysis</li>
-    <li>A/B Testing & Experimentation</li>
-    <li>Behavioral Analytics</li>
-    <li>Forecasting</li>
-    <li>Data Cleaning & Transformation</li>
-    <li>KPI & Metric Design</li>
-    <li>Data Storytelling</li>
-</ul>
-</div>
-""",
-unsafe_allow_html=True
-            )
+    # ---------- TOOLS & SKILLS ROW (CENTERED) ----------
+    outer_left, outer_center, outer_right = st.columns([1, 3, 1])
+    with outer_center:
+        tools_col, skills_col = st.columns(2)
 
-        # ---- TOOLS CARD ----
         with tools_col:
-            st.markdown(
-f"""
-{card_style}
-<h4 style='margin-top:0;'>🔧 Tools</h4>
-<ul style="padding-left:20px;">
-    <li>Tableau</li>
-    <li>Power BI</li>
-    <li>Snowflake</li>
-    <li>SSMS</li>
-    <li>Excel</li>
-    <li>GitHub</li>
-    <li>Jira</li>
-    <li>Perforce</li>
-</ul>
-</div>
-""",
-unsafe_allow_html=True
-            )
+            with st.expander("🔧 Tools", expanded=True):
+                st.markdown(
+                    """
+                    - Tableau  
+                    - Power BI  
+                    - Snowflake  
+                    - SSMS  
+                    - Excel  
+                    - GitHub  
+                    - Jira  
+                    - Perforce  
+                    """
+                )
+
+        with skills_col:
+            with st.expander("📊 Skills", expanded=True):
+                st.markdown(
+                    """
+                    - SQL  
+                    - BigQuery  
+                    - R Programming  
+                    - Cohort Analysis  
+                    - A/B Testing & Experimentation  
+                    - Behavioral Analytics  
+                    - Forecasting  
+                    - Data Cleaning & Transformation  
+                    - KPI & Metric Design  
+                    - Data Storytelling  
+                    """
+                )
 
 # --- CAPSTONE PROJECT ---
 elif tab == "📘 Capstone Project":

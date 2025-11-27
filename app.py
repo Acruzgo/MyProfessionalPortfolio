@@ -19,34 +19,86 @@ tab = st.sidebar.radio("Go to", ["👨‍💼 Bio", "📘 Capstone Project", "�
 if tab == "👨‍💼 Bio":
     st.title("Professional Portfolio")
 
-    col1, col2 = st.columns([1, 3])  # Adjust width ratio if needed
+    # Layout: LEFT column (image), RIGHT column (about + cards)
+    left, right = st.columns([1, 2])
 
-    with col1:
+    # LEFT SIDE IMAGE
+    with left:
         st.image("images/me.jpg", caption="Argenis Cruz-Gonzalez", use_container_width=True)
 
-    with col2:
+    # RIGHT SIDE (About Me + Skills/Tools cards)
+    with right:
+
+        # ABOUT ME at the top
         st.markdown("""
-        ### About Me  
-        **Data & Strategy Professional • MBA in Business & Analytics • $5M+ in Annual Impact • Transitioning into Product Management**  
+        ## About Me
+        I work across data, analytics, and workflow improvement — using SQL, BigQuery, dashboards,
+        and experimentation frameworks to help teams understand behavior, identify issues,
+        and make informed decisions.
 
-        MBA graduate in Business & Data Analytics (Tulane, GPA 3.97) with 6+ years of experience delivering multi-million-dollar impact through data-driven solutions. Skilled at transforming complex data into actionable insights, I excel at bridging business needs with technical execution.  
-
-        Currently transitioning into **product management and technology-driven industries**, I bring expertise in SQL, Tableau, and Agile collaboration—paired with a passion for innovation, data storytelling, and creating user-focused solutions.  
-
-        - 🏅 MBA, Tulane University – Business & Data Analytics (GPA 3.97)  
-        - 📊 6+ years driving analytics & strategy at Optum (UnitedHealth Group)  
-        - 🚀 Proven record in automation, BI dashboards, and cross-functional leadership  
-
-        ### Skills  
-        - **SQL & Databases:** SQL (Advanced), Snowflake, SSMS  
-        - **Business Intelligence:** Tableau (Advanced), Power BI  
-        - **Excel & Automation:** Excel (Advanced), VBA Automation  
-        - **Programming & Tools:** Python (In Progress), GitHub, Agile/Scrum  
-        - **Languages:** English, Spanish  
-
-        ---
-        🔑 *Open to opportunities where I can leverage data, strategy, and product expertise to drive innovation in technology-driven industries — with applications ranging from SaaS and healthcare to gaming.* 
+        When I'm not analyzing data, you'll usually find me 🎮 gaming, 🚣‍♂️ kayaking, 🎨 exploring art,
+        or 🎧 listening to music — hobbies that keep me creative and grounded.
         """)
+
+        st.markdown("")  # spacing
+
+        # NESTED ROW for cards (INSIDE right column)
+        skills_col, tools_col = st.columns(2)
+
+        # ---- CARD STYLE ----
+        card_style = """
+        <div style="
+            background-color:#1e1e1e;
+            padding:15px;
+            border-radius:10px;
+            border:1px solid #333;
+            margin-bottom:20px;
+        ">
+        """
+
+        # ---- SKILLS CARD ----
+        with skills_col:
+            st.markdown(
+f"""
+{card_style}
+<h4 style='margin-top:0;'>📊 Skills</h4>
+<ul style="padding-left:20px;">
+    <li>SQL</li>
+    <li>BigQuery</li>
+    <li>R Programming</li>
+    <li>Cohort Analysis</li>
+    <li>A/B Testing & Experimentation</li>
+    <li>Behavioral Analytics</li>
+    <li>Forecasting</li>
+    <li>Data Cleaning & Transformation</li>
+    <li>KPI & Metric Design</li>
+    <li>Data Storytelling</li>
+</ul>
+</div>
+""",
+unsafe_allow_html=True
+            )
+
+        # ---- TOOLS CARD ----
+        with tools_col:
+            st.markdown(
+f"""
+{card_style}
+<h4 style='margin-top:0;'>🔧 Tools</h4>
+<ul style="padding-left:20px;">
+    <li>Tableau</li>
+    <li>Power BI</li>
+    <li>Snowflake</li>
+    <li>SSMS</li>
+    <li>Excel</li>
+    <li>GitHub</li>
+    <li>Jira</li>
+    <li>Perforce</li>
+</ul>
+</div>
+""",
+unsafe_allow_html=True
+            )
 
 # --- CAPSTONE PROJECT ---
 elif tab == "📘 Capstone Project":

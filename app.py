@@ -2,7 +2,13 @@ import streamlit as st
 import pandas as pd
 import sqlite3
 import os
+import streamlit.components.v1 as components
+
 import base64
+
+def load_image_base64(path: str) -> str:
+    with open(path, "rb") as f:
+        return base64.b64encode(f.read()).decode("utf-8")
 
 # Set page config
 st.set_page_config(page_title="Argenis Portfolio", layout="wide")
@@ -17,7 +23,7 @@ tab = st.sidebar.radio("Go to", ["👨‍💼 Bio", "📘 Capstone Project", "�
 
 if tab == "👨‍💼 Bio":
 
-    # NAME + TITLE
+    # --- HEADER ---
     st.markdown("""
         <div style='text-align:center; margin-top:1px;'>
             <h2 style='margin-bottom:0;'>Argenis Cruz-Gonzalez</h2>
@@ -25,84 +31,170 @@ if tab == "👨‍💼 Bio":
         </div>
     """, unsafe_allow_html=True)
 
-    # GHOST LAYOUT: 3 columns where center column matches Streamlit element width (865px)
-    left, center, right = st.columns([1, 2.5, 1])
+    st.markdown("<br>", unsafe_allow_html=True)
 
-    with center:
+    # Load image as base64
+    img_b64 = load_image_base64("images/me_fixed.png")
+    img_tag = f"""
+<img src="data:image/png;base64,{img_b64}"
+     style="position:absolute; top:0; left:0;
+            width:100%; height:100%;
+            object-fit:cover; object-position:center;">
+"""
 
-        # nested columns: IMAGE | ABOUT ME
-        img_col, about_col = st.columns([0.5, 1.25], vertical_alignment="center")
+    # Global CSS for Cards + Badges ✨
+    st.markdown("""
+<style>
 
-        # IMAGE (no caption so your name is not duplicated)
-        with img_col:
-            st.markdown("<div style='text-align:center;'>", unsafe_allow_html=True)
-            st.image("images/me.jpg", width=350)
-            st.markdown("</div>", unsafe_allow_html=True)
+.card {
+    transition: all 0.25s ease-in-out;
+    position: relative;
+}
 
-        # ABOUT ME (matched height)
-        with about_col:
-            st.markdown("""
-                <div style="
-                    background-color:#1e1e1e;
-                    padding:20px 28px;
-                    border-radius:12px;
-                    border:1px solid #333;
-                    min-height:350px;
-                    display:flex;
-                    flex-direction:column;
-                    justify-content:center;
-                ">
-                    <h2>About Me</h2>
-                    <p style="font-size:16px; line-height:1.6;">
-                        I work across data, analytics, and workflow improvement — using SQL, BigQuery,
-                        dashboards, and experimentation frameworks to help teams understand behavior,
-                        identify issues, and make informed decisions.
-                        <br><br>
-                        When I'm not analyzing data, you'll usually find me 🎮 gaming, 🚣‍♂️ kayaking,
-                        🎨 exploring art, or 🎧 listening to music — hobbies that keep me creative and grounded.
-                    </p>
-                </div>
-            """, unsafe_allow_html=True)
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 18px rgba(146, 83, 255, 0.65);
+}
 
-    st.markdown("<hr>", unsafe_allow_html=True)
+.card-content {
+    padding: 20px;
+    font-size: 15px;
+}
+
+.card h3 {
+    font-size: 22px !important;
+    margin-bottom: 14px;
+}
+
+/* Badge Grid */
+.badge-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, auto));
+    gap: 8px;
+    justify-content: center;
+}
+
+/* Individual Item Badge */
+.badge {
+    background-color: #262626;
+    padding: 6px 14px;
+    border-radius: 10px;
+    border: 1px solid #3f3f3f;
+    font-size: 13px;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+    white-space: nowrap;
+    color: #dcdcdc;
+}
+
+.badge:hover {
+    background-color: #5f2cff;
+    color: white;
+    border-color: #9e66ff;
+    box-shadow: 0 0 10px rgba(146, 83, 255, 0.6);
+    transform: translateY(-3px);
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 
-    # ---------- TOOLS & SKILLS ROW (CENTERED) ----------
-    outer_left, outer_center, outer_right = st.columns([1, 3, 1])
+    # Card Style 🍫
+    card_style = """
+background-color:#1f1f1f;
+border:1px solid #3a3a3a;
+border-radius:18px;
+width:100%;
+aspect-ratio:0.95 / 1;
+overflow:hidden;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+"""
+
+    # Layout Centering
+    outer_left, outer_center, outer_right = st.columns([1.2, 2, 1.2])
     with outer_center:
-        tools_col, skills_col = st.columns(2)
 
-        with tools_col:
-            with st.expander("🔧 Tools", expanded=True):
-                st.markdown(
-                    """
-                    - Tableau  
-                    - Power BI  
-                    - Snowflake  
-                    - SSMS  
-                    - Excel  
-                    - GitHub  
-                    - Jira  
-                    - Perforce  
-                    """
-                )
+        # ROW 1 — IMAGE + ABOUT ME
+        row1_col1, row1_col2 = st.columns(2)
 
-        with skills_col:
-            with st.expander("📊 Skills", expanded=True):
-                st.markdown(
-                    """
-                    - SQL  
-                    - BigQuery  
-                    - R Programming  
-                    - Cohort Analysis  
-                    - A/B Testing & Experimentation  
-                    - Behavioral Analytics  
-                    - Forecasting  
-                    - Data Cleaning & Transformation  
-                    - KPI & Metric Design  
-                    - Data Storytelling  
-                    """
-                )
+        with row1_col1:
+            st.markdown(
+                f"""
+<div class="card" style="{card_style}">
+{img_tag}
+</div>
+                """,
+                unsafe_allow_html=True
+            )
+
+        with row1_col2:
+            st.markdown(
+                f"""
+<div class="card" style="{card_style}">
+<div class="card-content">
+<h3>💠 About Me</h3>
+I work across data, analytics, and workflow optimization — using SQL,
+BigQuery, dashboards, and experimentation frameworks to support
+insight-driven decisions.
+<br><br>
+Outside work:
+🎮 gaming · 🚣‍♂️ kayaking · 🎨 art · 🎧 music
+</div>
+</div>
+                """,
+                unsafe_allow_html=True
+            )
+
+        # ROW 2 — TOOLS + SKILLS
+        row2_col1, row2_col2 = st.columns(2)
+
+        # 🔧 Tools
+        tools = ["Tableau", "Power BI", "Snowflake", "SSMS", "Excel", "GitHub", "Jira", "Perforce"]
+        tool_items = "".join([f"<div class='badge'>{t}</div>" for t in tools])
+
+        with row2_col1:
+            st.markdown(
+                f"""
+<div class="card" style="{card_style}">
+<div class="card-content">
+<h3>🔧 Tools</h3>
+<div class="badge-grid">
+{tool_items}
+</div>
+</div>
+</div>
+                """,
+                unsafe_allow_html=True
+            )
+
+        # 📊 Skills
+        skills = [
+            "SQL", "BigQuery", "R Programming", "Cohort Analysis",
+            "Experimentation", "Forecasting", "Data Cleaning",
+            "KPI Design", "Data Storytelling"
+        ]
+        skill_items = "".join([f"<div class='badge'>{s}</div>" for s in skills])
+
+        with row2_col2:
+            st.markdown(
+                f"""
+<div class="card" style="{card_style}">
+<div class="card-content">
+<h3>📊 Skills</h3>
+<div class="badge-grid">
+{skill_items}
+</div>
+</div>
+</div>
+                """,
+                unsafe_allow_html=True
+            )
+
+
+
 
 # --- CAPSTONE PROJECT ---
 elif tab == "📘 Capstone Project":
@@ -117,12 +209,20 @@ elif tab == "📘 Capstone Project":
     """)
 
     try:
-        with open(os.path.join("assets", "F2P_Capstone.html"), "r", encoding="utf-8") as f:
+        capstone_path = os.path.join("assets", "F2P_Capstone.html")
+        with open(capstone_path, "r", encoding="utf-8") as f:
             capstone_html = f.read()
-        st.components.v1.html(capstone_html, height=1800, scrolling=True)
+
+        # IMPORTANT: only embed the HTML here, nowhere else
+        components.html(
+            capstone_html,
+            height=1800,       # keep it contained vertically
+            scrolling=True     # scroll only inside the iframe
+        )
 
     except FileNotFoundError:
         st.error("Capstone file not found. Make sure F2P_Capstone.html is in the /assets folder.")
+
 
 # --- SQL CODE ---
 elif tab == "🛠️ SQL Code":
@@ -428,7 +528,7 @@ ORDER BY RestaurantClients.[Hour] ASC;
         """)
     st.code(sql_code, language='sql')
 
-# --- DASHBOARD ---
+# --- DASHBOARDS ---
 elif tab == "📊 Dashboards":
     st.title("📊 Interactive Dashboards")
 
@@ -445,7 +545,7 @@ elif tab == "📊 Dashboards":
             "filename": "maven_roasters_detail_rebuilt.html",
             "instructions": """\
     ### 🧠 Customer & Warehouse Operations Dashboard  
-    Also created independently during the *Advanced Tableau Desktop* course by Maven Analytics. This dashboard simulates operational business intelligence through customer cohorts, picker performance, and fulfillment KPIs. Built using parameter actions, multi-measure displays, set-driven interactivity, and advanced calculated fields — all constructed from a blank Tableau canvas..
+    Also created independently during the *Advanced Tableau Desktop* course by Maven Analytics. This dashboard simulates operational business intelligence through customer cohorts, picker performance, and fulfillment KPIs. Built using parameter actions, multi-measure displays, set-driven interactivity, and advanced calculated fields — all constructed from a blank Tableau canvas.
     """,
             "height": 2500
         }
@@ -455,23 +555,24 @@ elif tab == "📊 Dashboards":
     dashboard_choice = st.selectbox("Choose a dashboard to explore:", list(dashboards.keys()))
     selected = dashboards[dashboard_choice]
 
-    # Show instructions and embedded HTML
+    # Show text + embed
     st.markdown(selected["instructions"])
     st.markdown("---")
+
     try:
         with open(os.path.join("assets", selected["filename"]), "r", encoding="utf-8") as f:
             html = f.read()
-        st.components.v1.html(html, height=selected["height"], scrolling=False)
+        st.components.v1.html(html, height=selected["height"], scrolling=True)
     except FileNotFoundError:
         st.error(f"Dashboard file '{selected['filename']}' not found.")
+
     st.markdown("---")
 
-    # Footer (only once)
+    # Project notes footer
     st.markdown("""
     ---
 
     📌 **Dashboard Project Notes:**  
-    The *Game Sales Dashboard* was developed during my MBA Tableau course and focuses on core visualization techniques and interactivity.  
     The *Retail* and *Analytics* dashboards were fully built from scratch as part of the *Advanced Tableau Desktop* course by Maven Analytics on LinkedIn Learning. While the business scenarios were part of the course, every chart, filter, action, and layout was recreated independently to demonstrate mastery of Tableau's advanced design, logic, and storytelling capabilities.
     """)
 
@@ -479,12 +580,12 @@ elif tab == "📊 Dashboards":
 elif tab == "📄 Resume":
     st.title("📄 My Resume")
 
-    st.image("images/Resume_Long_Fixed.png", width=850)
+    st.image("images/Argenis_Cruz-Gonzalez_Resume.png", width=850)
 
     st.markdown("📥 Prefer a PDF copy?")
     st.download_button(
         label="Download My Resume (PDF)",
-        data=open("assets/Argenis_Cruz-Gonzalez_MBA_Resume.pdf", "rb").read(),
+        data=open("assets/Argenis_Cruz-Gonzalez_Resume.pdf", "rb").read(),
         file_name="Argenis_Cruz-Gonzalez_MBA_Resume.pdf",
         mime="application/pdf"
     )

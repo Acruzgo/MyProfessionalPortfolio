@@ -3,197 +3,352 @@ import pandas as pd
 import sqlite3
 import os
 import streamlit.components.v1 as components
-
+import textwrap
 import base64
 
 def load_image_base64(path: str) -> str:
     with open(path, "rb") as f:
         return base64.b64encode(f.read()).decode("utf-8")
 
-# Set page config
-st.set_page_config(page_title="Argenis Portfolio", layout="wide")
+# --- GLOBAL PAGE CONFIG (collapsed sidebar) ---
+st.set_page_config(
+    page_title="Argenis Portfolio",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
 
-# Sidebar
-st.sidebar.title("Navigation")
+# --- SIDEBAR + TOGGLE STYLING ---
+st.markdown("""
+<style>
+
+[data-testid="stSidebar"] {
+    background-color: #161616;
+    border-right: 1px solid #2a2a2a;
+}
+
+/* Avatar */
+.sidebar-avatar img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #A46BFD;
+    box-shadow: 0 0 12px rgba(146, 83, 255, 0.5);
+}
+
+/* Name + Title */
+.sidebar-name {
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #f2f2f2;
+}
+
+.sidebar-role {
+    font-size: 12px;
+    color: #9b9b9b;
+    margin-top: -6px;
+}
+
+<style>
+
+/* Target the wrapper DIV found in HTML */
+div.st-emotion-cache-8ezv7j {
+    position: relative !important;
+    z-index: 999999 !important;
+}
+
+/* Target the actual glowing button */
+div.st-emotion-cache-8ezv7j button {
+    background: rgba(130, 0, 255, 0.35) !important;
+    border-radius: 14px !important;
+    border: 2px solid rgba(180, 0, 255, 0.8) !important;
+
+    /* 💜 MASSIVE NEON PURPLE GLOW */
+    box-shadow:
+        0 0 22px #8a2be2,
+        0 0 44px #8a2be2,
+        0 0 88px #8a2be2,
+        0 0 132px rgba(138, 43, 226, 0.95) !important;
+
+    animation: pulseGlow 2s infinite ease-in-out;
+    transition: all 0.2s;
+}
+
+/* Pulse effect — always glowing */
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow:
+            0 0 18px #bf00ff,
+            0 0 55px #bf00ff,
+            0 0 110px rgba(140, 0, 255, 1);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow:
+            0 0 35px #e000ff,
+            0 0 105px #e000ff,
+            0 0 160px rgba(200, 0, 255, 1);
+        transform: scale(1.18);
+    }
+}
+
+/* Icon brightness */
+div.st-emotion-cache-8ezv7j button span[data-testid="stIconMaterial"] {
+    color: #ffffff !important;
+    font-size: 25px !important;
+    filter: drop-shadow(0 0 10px #ffffff);
+}
+
+</style>
+
+""", unsafe_allow_html=True)
+
+# --- SIDEBAR PROFILE UI ---
+avatar_b64 = load_image_base64("images/me_fixed.png")
+
+st.sidebar.markdown(
+    f"""
+    <div style="text-align:center; padding-top:10px;">
+        <span class="sidebar-avatar">
+            <img src="data:image/png;base64,{avatar_b64}">
+        </span>
+        <div class="sidebar-name">Argenis Cruz-Gonzalez</div>
+        <div class="sidebar-role">Data & Analytics Professional</div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+# --- SIDEBAR NAVIGATION ---
+st.sidebar.markdown("---")
+tab = st.sidebar.radio(
+    "Go to",
+    ["👨‍💼 Bio", "📘 Capstone Project", "📊 Dashboards", "🛠️ SQL Code", "📄 Resume"]
+)
 st.sidebar.markdown("---")
 st.sidebar.markdown("📧 [Email Me](mailto:acruzgo@outlook.com)")
 st.sidebar.markdown("🔗 [LinkedIn](https://www.linkedin.com/in/acruzgo/)")
-tab = st.sidebar.radio("Go to", ["👨‍💼 Bio", "📘 Capstone Project", "📊 Dashboards", "🛠️ SQL Code", "📄 Resume"])
 
 
 if tab == "👨‍💼 Bio":
 
-    # --- HEADER ---
-    st.markdown("""
-        <div style='text-align:center; margin-top:1px;'>
-            <h2 style='margin-bottom:0;'>Argenis Cruz-Gonzalez</h2>
-            <h1 style='margin-top:1px;'>Professional Portfolio</h1>
-        </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown("<br>", unsafe_allow_html=True)
-
-    # Load image as base64
     img_b64 = load_image_base64("images/me_fixed.png")
-    img_tag = f"""
-<img src="data:image/png;base64,{img_b64}"
-     style="position:absolute; top:0; left:0;
-            width:100%; height:100%;
-            object-fit:cover; object-position:center;">
-"""
 
-    # Global CSS for Cards + Badges ✨
-    st.markdown("""
-<style>
+    html = f"""
+    <html>
+    <head>
+    <style>
 
-.card {
-    transition: all 0.25s ease-in-out;
-    position: relative;
-}
+    /* 👇 Fade + Drop + Temporary Glow Animation for Cards */
+    .fade-drop {{
+        opacity: 0;
+        transform: translateY(-35px);
+        animation: fadeDropGlow 0.9s ease-out forwards;
+    }}
 
-.card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 0 18px rgba(146, 83, 255, 0.65);
-}
+    .grid .card:nth-child(1) {{ animation-delay: 0.12s; }}
+    .grid .card:nth-child(2) {{ animation-delay: 0.24s; }}
+    .grid .card:nth-child(3) {{ animation-delay: 0.36s; }}
+    .grid .card:nth-child(4) {{ animation-delay: 0.48s; }}
 
-.card-content {
-    padding: 20px;
-    font-size: 15px;
-}
+    @keyframes fadeDropGlow {{
+        0% {{
+            opacity: 0;
+            transform: translateY(-35px);
+            box-shadow: 0 0 18px rgba(146,83,255,0.6);
+        }}
+        60% {{
+            opacity: 1;
+            transform: translateY(8px);
+            box-shadow: 0 0 28px rgba(146,83,255,0.9);
+        }}
+        100% {{
+            opacity: 1;
+            transform: translateY(0);
+            box-shadow: none;
+        }}
+    }}
 
-.card h3 {
-    font-size: 22px !important;
-    margin-bottom: 14px;
-}
-
-/* Badge Grid */
-.badge-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(110px, auto));
-    gap: 8px;
-    justify-content: center;
-}
-
-/* Individual Item Badge */
-.badge {
-    background-color: #262626;
-    padding: 6px 14px;
-    border-radius: 10px;
-    border: 1px solid #3f3f3f;
-    font-size: 13px;
-    text-align: center;
-    transition: all 0.2s ease-in-out;
+    /* ⌨️ Faster Typing + Clean Cursor Finish */
+    .typing {{
+    width: 0;
+    overflow: hidden;
     white-space: nowrap;
-    color: #dcdcdc;
-}
-
-.badge:hover {
-    background-color: #5f2cff;
-    color: white;
-    border-color: #9e66ff;
-    box-shadow: 0 0 10px rgba(146, 83, 255, 0.6);
-    transform: translateY(-3px);
-}
-
-</style>
-""", unsafe_allow_html=True)
+    display: inline-block;
+    animation: typing 4.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+    }}
+    
+    @keyframes typing {{
+        from {{ width: 0; }}
+        to {{ width: 100%; }}
+    }}
 
 
-    # Card Style 🍫
-    card_style = """
-background-color:#1f1f1f;
-border:1px solid #3a3a3a;
-border-radius:18px;
-width:100%;
-aspect-ratio:0.95 / 1;
-overflow:hidden;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-"""
 
-    # Layout Centering
-    outer_left, outer_center, outer_right = st.columns([1.2, 2, 1.2])
-    with outer_center:
+    .typing.finished {{
+        border-right: none !important;
+    }}
 
-        # ROW 1 — IMAGE + ABOUT ME
-        row1_col1, row1_col2 = st.columns(2)
+    @keyframes typing {{
+        from {{ width: 0; }}
+        to {{ width: 100%; }}
+    }}
 
-        with row1_col1:
-            st.markdown(
-                f"""
-<div class="card" style="{card_style}">
-{img_tag}
-</div>
-                """,
-                unsafe_allow_html=True
-            )
+    @keyframes blink {{
+        50% {{ border-color: transparent; }}
+    }}
 
-        with row1_col2:
-            st.markdown(
-                f"""
-<div class="card" style="{card_style}">
-<div class="card-content">
-<h3>💠 About Me</h3>
-I work across data, analytics, and workflow optimization — using SQL,
-BigQuery, dashboards, and experimentation frameworks to support
-insight-driven decisions.
-<br><br>
-Outside work:
-🎮 gaming · 🚣‍♂️ kayaking · 🎨 art · 🎧 music
-</div>
-</div>
-                """,
-                unsafe_allow_html=True
-            )
+    /* 🎨 Page Styling */
+    body {{
+        font-family: 'Inter', sans-serif;
+        background: #111;
+        color: #eee;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }}
 
-        # ROW 2 — TOOLS + SKILLS
-        row2_col1, row2_col2 = st.columns(2)
+    .wrapper {{
+        max-width: 1150px;
+        margin: auto;
+        padding-top: 20px;
+    }}
 
-        # 🔧 Tools
-        tools = ["Tableau", "Power BI", "Snowflake", "SSMS", "Excel", "GitHub", "Jira", "Perforce"]
-        tool_items = "".join([f"<div class='badge'>{t}</div>" for t in tools])
+    h1, h2 {{
+        margin: 0;
+    }}
 
-        with row2_col1:
-            st.markdown(
-                f"""
-<div class="card" style="{card_style}">
-<div class="card-content">
-<h3>🔧 Tools</h3>
-<div class="badge-grid">
-{tool_items}
-</div>
-</div>
-</div>
-                """,
-                unsafe_allow_html=True
-            )
+    /* 🟥 Card Layout + Size */
+    .grid {{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(390px, 1fr));
+        gap: 28px;
+        margin-top: 40px;
+        justify-items: center;
+    }}
 
-        # 📊 Skills
-        skills = [
-            "SQL", "BigQuery", "R Programming", "Cohort Analysis",
-            "Experimentation", "Forecasting", "Data Cleaning",
-            "KPI Design", "Data Storytelling"
-        ]
-        skill_items = "".join([f"<div class='badge'>{s}</div>" for s in skills])
+    .card {{
+        background: #1f1f1f;
+        border: 1px solid #333;
+        border-radius: 18px;
+        aspect-ratio: 1 / 1;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: .25s ease;
+    }}
 
-        with row2_col2:
-            st.markdown(
-                f"""
-<div class="card" style="{card_style}">
-<div class="card-content">
-<h3>📊 Skills</h3>
-<div class="badge-grid">
-{skill_items}
-</div>
-</div>
-</div>
-                """,
-                unsafe_allow_html=True
-            )
+    .card:hover {{
+        transform: translateY(-6px);
+        box-shadow: 0 0 18px rgba(146,83,255,0.55);
+    }}
+
+    .content {{
+        padding: 20px;
+    }}
+
+    .badges {{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 10px;
+    }}
+
+    .badge {{
+        background:#222;
+        border:1px solid #444;
+        border-radius:10px;
+        padding:7px 14px;
+        font-size:13px;
+        white-space:nowrap;
+        transition:.2s;
+    }}
+
+    .badge:hover {{
+        background:#5f2cff;
+        border-color:#9e66ff;
+        color:#fff;
+        transform:translateY(-3px);
+    }}
+
+    .photo {{
+        position:absolute;
+        inset:0;
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        border-radius:18px;
+    }}
+
+    </style>
+    </head>
+
+    <body>
+
+    <div class="wrapper">
+        <h2 class="typing" id="name">Argenis Cruz-Gonzalez</h2><br>
+        <h1 class="typing" id="title">Professional Portfolio</h1>
 
 
+        <div class="grid">
+            <div class="card fade-drop">
+                <img src="data:image/png;base64,{img_b64}" class="photo">
+            </div>
+
+            <div class="card fade-drop">
+                <div class="content">
+                    <h3>💠 About Me</h3>
+                    I work across data, analytics, and workflow optimization —
+                    using SQL, BigQuery, dashboards, and experimentation to
+                    improve decision-making.
+                    <br><br>
+                    Outside work:<br>
+                    🎮 Gaming · 🚣‍♂️ Kayaking · 🎨 Art · 🎧 Music
+                </div>
+            </div>
+
+            <div class="card fade-drop">
+                <div class="content">
+                    <h3>🔧 Tools</h3>
+                    <div class="badges">
+                        {''.join([f"<div class='badge'>{t}</div>" for t in ["Tableau", "Power BI", "Snowflake", "SSMS", "Excel", "GitHub", "Jira", "Perforce"]])}
+                    </div>
+                </div>
+            </div>
+
+            <div class="card fade-drop">
+                <div class="content">
+                    <h3>📊 Skills</h3>
+                    <div class="badges">
+                        {''.join([f"<div class='badge'>{s}</div>" for s in ["SQL", "BigQuery", "R Programming", "Cohort Analysis", "Experimentation", "Forecasting", "Data Cleaning", "KPI Design", "Data Storytelling"]])}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JavaScript: Remove cursor after typing -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {{
+        setTimeout(() => {{
+            document.querySelectorAll(".typing").forEach(el =>
+                el.classList.add("finished")
+            );
+        }}, 2000);
+    }});
+    </script>
+
+    </body>
+    </html>
+    """
+
+    components.html(html, height=1600, scrolling=True)
 
 
 # --- CAPSTONE PROJECT ---

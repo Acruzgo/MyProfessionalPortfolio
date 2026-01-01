@@ -124,7 +124,7 @@ st.sidebar.markdown(
 st.sidebar.markdown("---")
 tab = st.sidebar.radio(
     "Go to",
-    ["👨‍💼 Bio", "📘 Capstone Project", "📊 Dashboards", "🛠️ SQL Code", "📄 Resume"]
+    ["👨‍💼 Bio", "🐍 Waze Retention Analysis (Python)", "🎮 Mobile Game Monetization Analysis (R)", "📊 Dashboards", "🔍 SQL Code", "📄 Resume"]
 )
 st.sidebar.markdown("---")
 st.sidebar.markdown("📧 [Email Me](mailto:acruzgo@outlook.com)")
@@ -304,7 +304,7 @@ if tab == "👨‍💼 Bio":
                 <div class="content">
                     <h3>💠 About Me</h3>
                     I work across data, analytics, and workflow optimization —
-                    using SQL, BigQuery, dashboards, and experimentation to
+                    using Python, SQL, dashboards, and experimentation to
                     improve decision-making.
                     <br><br>
                     Outside work:<br>
@@ -314,9 +314,9 @@ if tab == "👨‍💼 Bio":
 
             <div class="card fade-drop">
                 <div class="content">
-                    <h3>🔧 Tools</h3>
+                    <h3>🛠️ Tools</h3>
                     <div class="badges">
-                        {''.join([f"<div class='badge'>{t}</div>" for t in ["Tableau", "Power BI", "Snowflake", "SSMS", "Excel", "GitHub", "Jira", "Perforce"]])}
+                        {''.join([f"<div class='badge'>{t}</div>" for t in ["Tableau", "Power BI", "Jupyter Notebooks", "PyCharm", "Snowflake", "SSMS", "Excel", "GitHub", "Jira", "Perforce"]])}
                     </div>
                 </div>
             </div>
@@ -325,7 +325,7 @@ if tab == "👨‍💼 Bio":
                 <div class="content">
                     <h3>📊 Skills</h3>
                     <div class="badges">
-                        {''.join([f"<div class='badge'>{s}</div>" for s in ["SQL", "BigQuery", "R Programming", "Cohort Analysis", "Experimentation", "Forecasting", "Data Cleaning", "KPI Design", "Data Storytelling"]])}
+                        {''.join([f"<div class='badge'>{s}</div>" for s in ["Python (pandas, numpy, seaborn, matplotlib)", "SQL", "BigQuery", "R Programming (tidyverse, ggplot2, reshape2, corrplot)", "Cohort Analysis", "Experimentation", "Forecasting", "Data Cleaning", "KPI Design", "Data Storytelling"]])}
                     </div>
                 </div>
             </div>
@@ -350,13 +350,43 @@ if tab == "👨‍💼 Bio":
 
     components.html(html, height=1600, scrolling=True)
 
-
-# --- CAPSTONE PROJECT ---
-elif tab == "📘 Capstone Project":
-    st.title("📘 Mobile Game Monetization Analysis – Full Capstone")
+# --- Waze Retention Analysis (Python) (R) ---
+elif tab == "🐍 Waze Retention Analysis (Python)":
+    st.title("Waze User Retention & Churn Analysis (Python)")
 
     st.markdown("""
-    ### 🎮 Overview  
+    ### Project Overview  
+    This project explores user engagement, driving behavior, and churn patterns using the Waze public dataset.
+    The analysis focuses on understanding how usage frequency, driving distance, account age, and device type
+    relate to whether users stay engaged or churn.
+
+    Built entirely in **Python**, the project uses:
+    - pandas for data wrangling  
+    - seaborn & matplotlib for visualization  
+    - exploratory data analysis to identify churn risk signals  
+
+    **Use the interactive report below to explore findings.**
+    """)
+
+    try:
+        waze_path = os.path.join("assets", "Waze_Churn_Analysis.html")
+        with open(waze_path, "r", encoding="utf-8") as f:
+            waze_html = f.read()
+        components.html(
+            waze_html,
+            height=1800,
+            scrolling=True
+        )
+
+    except FileNotFoundError:
+        st.error("Waze analysis file not found. Make sure Waze_Retention_Analysis.html is in the /assets folder.")
+
+# --- Mobile Game Monetization Analysis (R) ---
+elif tab == "🎮 Mobile Game Monetization Analysis (R)":
+    st.title("Mobile Game Monetization Analysis – Full Capstone")
+
+    st.markdown("""
+    ### Project Overview   
     This capstone explores monetization patterns in a free-to-play mobile game dataset  
     using R, ggplot2, dplyr, and statistical analysis techniques.
 
@@ -381,12 +411,9 @@ elif tab == "📘 Capstone Project":
 
 # --- SQL CODE ---
 elif tab == "🛠️ SQL Code":
-    st.title("🛠️ SQL Snippets by Argenis")
+    st.title("SQL Snippets by Argenis")
 
     sql_code = """
---Argenis Cruz-Gonzalez
-USE Tulane_IT;
-
 --Table Creation (Client)
 CREATE TABLE Client(
 ClientID INT PRIMARY KEY,
@@ -685,21 +712,21 @@ ORDER BY RestaurantClients.[Hour] ASC;
 
 # --- DASHBOARDS ---
 elif tab == "📊 Dashboards":
-    st.title("📊 Interactive Dashboards")
+    st.title("Interactive Dashboards")
 
     dashboards = {
         "📈 Advanced Retail Dashboard": {
             "filename": "maven_roasters_dashboard_rebuilt.html",
             "instructions": """\
-    ### 📈 Retail Sales Performance Dashboard  
+    ### Retail Sales Performance Dashboard  
     Built entirely from scratch as part of the *Advanced Tableau Desktop* course by Maven Analytics on LinkedIn Learning. This dashboard visualizes sales trends, product category breakdowns, and regional performance for a fictional coffee brand. Developed using advanced layout design, KPI cards, dynamic sheet swapping, filter menus, and custom visuals — all implemented independently.
     """,
             "height": 1400
         },
-        "🧠 Advanced Analytics Dashboard": {
+        "📋 Advanced Analytics Dashboard": {
             "filename": "maven_roasters_detail_rebuilt.html",
             "instructions": """\
-    ### 🧠 Customer & Warehouse Operations Dashboard  
+    ### Customer & Warehouse Operations Dashboard  
     Also created independently during the *Advanced Tableau Desktop* course by Maven Analytics. This dashboard simulates operational business intelligence through customer cohorts, picker performance, and fulfillment KPIs. Built using parameter actions, multi-measure displays, set-driven interactivity, and advanced calculated fields — all constructed from a blank Tableau canvas.
     """,
             "height": 2500

@@ -410,7 +410,7 @@ elif tab == "🎮 Mobile Game Monetization Analysis (R)":
 
 
 # --- SQL CODE ---
-elif tab == "🛠️ SQL Code":
+elif tab == "🔍 SQL Code":
     st.title("SQL Snippets by Argenis")
 
     sql_code = """

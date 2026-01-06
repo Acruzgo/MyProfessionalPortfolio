@@ -413,6 +413,7 @@ elif tab == "🎮 Mobile Game Monetization Analysis (R)":
 elif tab == "🔍 SQL Code":
     st.title("SQL Snippets by Argenis")
 
+    # --- Define SQL FIRST (outside UI containers) ---
     sql_code = """
 --Table Creation (Client)
 CREATE TABLE Client(
@@ -693,22 +694,31 @@ FROM
 GROUP BY RestaurantClients.[Hour]
 ORDER BY RestaurantClients.[Hour] ASC;
     """
-    # SQL Project Overview (Collapsible Section)
-    with st.expander("Project Overview - *click to expand*"):
-        st.markdown("""
+    # --- Project Overview (always visible) ---
+    st.markdown("""
     **SQL Business Analytics Project – Tulane University (MBA Program)**  
-    This project was developed as part of an MBA-level SQL course, simulating a real-world business scenario involving client behavior, subscription tiers, and employee performance. Using Microsoft SQL Server, I created normalized schemas, imported and cleaned datasets, and built logic-driven queries to extract actionable insights.
+    This project simulates a real-world business scenario involving client behavior,
+    subscription tiers, and employee performance using Microsoft SQL Server.
 
     **Key Highlights:**
-    - Designed and populated relational schemas using `CREATE TABLE`, `BULK INSERT`, and foreign keys
-    - Wrote complex queries to answer business questions across client segmentation, sales attribution, and operational performance
-    - Built dynamic views and stored procedures for employee-specific reporting
-    - Joined datasets across multiple schemas (App, HR, Restaurant) and used `GROUP BY`, `CASE`, `UNION`, `HAVING`, and aggregation logic
-    - Delivered 10+ insights on clients, cities, coffee sales, device usage, and subscription revenue
+    - Designed normalized schemas and populated datasets
+    - Built analytical queries and reporting views
+    - Implemented stored procedures for dynamic reporting
+    """)
 
-    **Tools Used:** SQL Server Management Studio (SSMS), Snowflake-compatible syntax
-        """)
-    st.code(sql_code, language='sql')
+    st.markdown("---")
+    st.caption("⬇️ Expand below to view the full SQL implementation")
+
+    # --- SQL CODE (ONLY collapsible part) ---
+    with st.expander("🧠 View Full SQL Code"):
+        st.code(sql_code, language="sql", line_numbers=True)
+
+        st.download_button(
+            "📥 Download SQL Script",
+            sql_code,
+            "argeniscg_sql_project.sql",
+            "text/plain"
+        )
 
 # --- DASHBOARDS ---
 elif tab == "📊 Dashboards":
